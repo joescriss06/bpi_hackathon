@@ -1,238 +1,9 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AiB Banking</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #e8e6e1 0%, #d4d1ca 100%);
-            min-height: 100vh;
-        }
-
-        .header {
-            background: #e8e6e1;
-            padding: 15px 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid #d0ccc5;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .logo-text {
-            font-size: 24px;
-            font-weight: bold;
-            color: #2d4a3e;
-        }
-
-        .logo-subtext {
-            font-size: 10px;
-            color: #2d4a3e;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .nav-links {
-            display: flex;
-            align-items: center;
-            gap: 30px;
-        }
-
-        .nav-links a {
-            color: #2d4a3e;
-            text-decoration: none;
-            font-weight: 500;
-        }
-
-        .logout-btn {
-            background: #2d4a3e;
-            color: white;
-            padding: 10px 25px;
-            border: none;
-            border-radius: 25px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: background 0.3s ease;
-        }
-
-        .logout-btn:hover {
-            background: #1e3529;
-        }
-
-        .main-content {
-            padding: 40px 30px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .welcome-section {
-            display: grid;
-            grid-template-columns: 1fr 2fr;
-            gap: 30px;
-            margin-bottom: 40px;
-        }
-
-        .welcome-card {
-            background: rgba(255, 255, 255, 0.3);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .welcome-text {
-            font-size: 28px;
-            font-weight: bold;
-            color: #2d4a3e;
-            margin-bottom: 30px;
-            line-height: 1.2;
-        }
-
-        .prediction-section h3 {
-            font-size: 22px;
-            color: #2d4a3e;
-            margin-bottom: 15px;
-        }
-
-        .prediction-text {
-            color: #2d4a3e;
-            line-height: 1.5;
-            margin-bottom: 25px;
-            font-size: 14px;
-        }
-
-        .check-prediction-btn {
-            background: #2d4a3e;
-            color: white;
-            padding: 12px 25px;
-            border: none;
-            border-radius: 25px;
-            cursor: pointer;
-            font-weight: 500;
-            transition: background 0.3s ease;
-        }
-
-        .check-prediction-btn:hover {
-            background: #1e3529;
-        }
-
-        .savings-section {
-            text-align: center;
-        }
-
-        .account-number {
-            font-size: 18px;
-            color: #2d4a3e;
-            font-weight: 600;
-            margin-bottom: 20px;
-        }
-
-        .savings-title {
-            font-size: 24px;
-            color: #2d4a3e;
-            margin-bottom: 30px;
-            font-weight: 500;
-        }
-
-        .balance {
-            font-size: 48px;
-            font-weight: bold;
-            color: #2d4a3e;
-            margin-bottom: 40px;
-        }
-
-        .transaction-section {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 20px;
-        }
-
-        .transaction-card {
-            background: rgba(255, 255, 255, 0.4);
-            border-radius: 15px;
-            padding: 40px 20px;
-            text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            cursor: pointer;
-            min-height: 120px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .transaction-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-        }
-
-        .transaction-card h4 {
-            font-size: 18px;
-            color: #2d4a3e;
-            font-weight: 600;
-        }
-
-        .footer {
-            position: fixed;
-            bottom: 20px;
-            left: 30px;
-        }
-
-        .footer-logo {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            opacity: 0.7;
-        }
-
-        .footer-logo-text {
-            font-size: 20px;
-            font-weight: bold;
-            color: #2d4a3e;
-        }
-
-        .footer-logo-subtext {
-            font-size: 8px;
-            color: #2d4a3e;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        @media (max-width: 768px) {
-            .welcome-section {
-                grid-template-columns: 1fr;
-            }
-            
-            .transaction-section {
-                grid-template-columns: 1fr;
-            }
-            
-            .balance {
-                font-size: 36px;
-            }
-            
-            .header {
-                padding: 15px 20px;
-            }
-            
-            .main-content {
-                padding: 20px;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="css/index.css">
 </head>
 <body>
     <header class="header">
@@ -243,70 +14,37 @@
             </div>
         </div>
         <nav class="nav-links">
-            <a href="#" onclick="showAlert('About Us')">ABOUT US</a>
+            <a href="aboutus.html">ABOUT US</a>
             <a href="#" onclick="showAlert('Help & Support')">HELP & SUPPORT</a>
-            <button class="logout-btn" onclick="showAlert('Logging out...')">Logout</button>
+            <button class="login-btn" onclick="window.location.href='login.html'">LOGIN</button>
         </nav>
     </header>
-
-    <main class="main-content">
-        <div class="welcome-section">
-            <div class="welcome-card">
-                <div class="welcome-text">HEY USER,<br>WELCOME BACK</div>
-                <div class="prediction-section">
-                    <h3>Your Prediction</h3>
-                    <p class="prediction-text">Here, our prediction will be based on how much you intend to invest and which products should you use.</p>
-                    <button class="check-prediction-btn" onclick="showAlert('Checking your prediction...')">Check your Prediction</button>
-                </div>
-            </div>
-            
-            <div class="welcome-card savings-section">
-                <div class="account-number">0457 4567 4567</div>
-                <h2 class="savings-title">YOUR SAVINGS</h2>
-                <div class="balance">₱ 2,500.78</div>
-                <div class="transaction-section">
-                    <div class="transaction-card" onclick="showAlert('Send money feature')">
-                        <h4>Sent</h4>
-                    </div>
-                    <div class="transaction-card" onclick="showAlert('Receive money feature')">
-                        <h4>Receive</h4>
-                    </div>
-                    <div class="transaction-card" onclick="showAlert('Transaction history')">
-                        <h4>Transaction<br>History</h4>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <footer class="footer">
-        <div class="footer-logo">
-            <div>
-                <div class="footer-logo-text">AiB</div>
-                <div class="footer-logo-subtext">ALL IN<br>BANKING</div>
-            </div>
-        </div>
-    </footer>
-
-    <script>
-        function showAlert(message) {
-            alert(message);
-        }
-
-        // Add some interactive effects
-        document.addEventListener('DOMContentLoaded', function() {
-            const cards = document.querySelectorAll('.transaction-card, .welcome-card');
-            
-            cards.forEach(card => {
-                card.addEventListener('mouseenter', function() {
-                    this.style.transform = 'translateY(-2px)';
-                });
-                
-                card.addEventListener('mouseleave', function() {
-                    this.style.transform = 'translateY(0)';
-                });
-            });
-        });
-    </script>
+    
+      <div class="hero">
+    <div class="hero-content">
+      <h1>
+        “Find your product. <br>
+        Start your savings. <br>
+        Stay protected and let’s get started.”
+      </h1>
+      <a href="login.html" class="btn">Get Started</a>
+    </div>
+  </div>
+    
+    <section>
+    <h2>Welcome to AiB Banking</h2>
+    <p>
+      At AiB, we believe in making financial services accessible, simple, 
+      and secure for everyone. Whether you're starting your first savings 
+      account, planning investments, or looking for financial support, 
+      we are here to help.
+    </p>
+  </section>
+        
+     <footer>
+    <p>&copy; 2025 AiB Banking. All rights reserved.</p>
+  </footer>
+    
 </body>
-</html>
+
+

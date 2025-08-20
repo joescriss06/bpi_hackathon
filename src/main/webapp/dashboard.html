@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AiB Banking</title>
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <div>
+                <div class="logo-text">AiB</div>
+                <div class="logo-subtext">ALL IN<br>BANKING</div>
+            </div>
+        </div>
+        <nav class="nav-links">
+            <a href="#" onclick="showAlert('About Us')">ABOUT US</a>
+            <a href="#" onclick="showAlert('Help & Support')">HELP & SUPPORT</a>
+            <button class="logout-btn" onclick="showAlert('Logging out...')">Logout</button>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <div class="welcome-section">
+            <div class="welcome-card">
+                <div class="welcome-text">HEY USER,<br>WELCOME BACK</div>
+                <div class="prediction-section">
+                    <h3>Your Prediction</h3>
+                    <p class="prediction-text">Here, our prediction will be based on how much you intend to invest and which products should you use.</p>
+                    <button class="check-prediction-btn" onclick="showAlert('Checking your prediction...')">Check your Prediction</button>
+                </div>
+            </div>
+            
+            <div class="welcome-card savings-section">
+                <div class="account-number">0457 4567 4567</div>
+                <h2 class="savings-title">YOUR SAVINGS</h2>
+                <div class="balance">₱ 2,500.78</div>
+                <div class="transaction-section">
+                    <div class="transaction-card" onclick="showAlert('Send money feature')">
+                        <h4>Sent</h4>
+                    </div>
+                    <div class="transaction-card" onclick="showAlert('Receive money feature')">
+                        <h4>Receive</h4>
+                    </div>
+                    <div class="transaction-card" onclick="showAlert('Transaction history')">
+                        <h4>Transaction<br>History</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-logo">
+            <div>
+                <div class="footer-logo-text">AiB</div>
+                <div class="footer-logo-subtext">ALL IN<br>BANKING</div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function showAlert(message) {
+            alert(message);
+        }
+
+        // Add some interactive effects
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.transaction-card, .welcome-card');
+            
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-2px)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
