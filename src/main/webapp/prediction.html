@@ -1,15 +1,106 @@
 <!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit this template
--->
-<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
-</html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AiB Banking - Your Prediction</title>
+    <link rel="stylesheet" href="css/prediction.css">
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <div>
+                <div class="logo-text">AiB</div>
+                <div class="logo-subtext">ALL IN<br>BANKING</div>
+            </div>
+        </div>
+        <nav class="nav-links">
+            <a href="#" onclick="showAlert('About Us')">ABOUT US</a>
+            <a href="#" onclick="showAlert('Help & Support')">HELP & SUPPORT</a>
+            <button class="logout-btn" onclick="showAlert('Logging out...')">Logout</button>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <div class="content-section">
+            <div class="left-section">
+                <div class="welcome-text">
+                    <h1>HEY USER!</h1>
+                    <h2>Here are the best decisions for you!</h2>
+                </div>
+
+                <div class="prediction-card">
+                    <h3>Your Prediction</h3>
+                    <p class="prediction-details">
+                        <strong>Account:</strong> After a year you'll have <strong>₱30,000</strong>, enough to cover 3 semester's tuition or books.
+                    </p>
+                    <p class="prediction-details">
+                        In <strong>3 years</strong>, that grows to <strong>₱78,000</strong>, which can already support major academic expenses or even small business capital.
+                    </p>
+                    <p class="prediction-details">
+                        By way, you can move part of this into a <strong>BPI Savings Automatic Account</strong> for emergencies.
+                    </p>
+                    <p class="prediction-details">
+                        By <strong>5 years</strong>, with discipline, you'll reach about <strong>₱96,000</strong>. At this stage, you can start exploring BPI Investment Funds or UITFs to let your money grow faster than regular savings.
+                    </p>
+                    <p class="prediction-details">
+                        Coupled with health and education insurance at account opening, this journey keeps you both financially and medically protected while you focus on graduating.
+                    </p>
+                    
+                    <button class="back-btn" onclick="goBack()">Go back to Dashboard</button>
+                </div>
+            </div>
+
+            <div class="right-section">
+                <div class="info-card main-info">
+                    <h3>What this means for you?</h3>
+                    <p>
+                        "You're not just saving allowance money — you're already investing in your future.
+                        By starting today, you'll have enough to cover tuition, books, or even a laptop 
+                        without needing to borrow. You'll also have an emergency fund to rely on while
+                        you focus on your studies without financial stress. And if you keep going,
+                        you'll be protected from unexpected hospital bills too."
+                    </p>
+                    <p>
+                        <strong>Would you like to open your own BPI account in as fast as 2 minutes with just one 
+                        valid ID?</strong> This way, you can start your savings journey today and secure both your 
+                        education and your health!"
+                    </p>
+                    
+                    <button class="create-account-btn" onclick="showAlert('Redirecting to BPI account creation...')">Create BPI Account</button>
+                </div>
+
+                <div class="feature-cards">
+                    <div class="feature-card">
+                        <div class="card-icon">💰</div>
+                        <h4>Smart Savings</h4>
+                        <p>Automatic transfers to help you reach your ₱96,000 goal faster with our AI-powered savings assistant.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="card-icon">📊</div>
+                        <h4>Investment Tracker</h4>
+                        <p>Monitor your BPI Investment Funds and UITFs performance with real-time updates and growth projections.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="card-icon">🛡️</div>
+                        <h4>Protection Plan</h4>
+                        <p>Comprehensive health and education insurance coverage to protect your financial journey.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-logo">
+            <div>
+                <div class="footer-logo-text">AiB</div>
+                <div class="footer-logo-subtext">ALL IN<br>BANKING</div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="prediction-script.js"></script>
+</body>
