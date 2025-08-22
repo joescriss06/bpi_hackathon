@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -93,6 +93,31 @@
         </div>
     </main>
 
+    <!-- Chatbot Section -->
+    <div class="chatbot-container">
+        <div class="chatbot-button" onclick="toggleChatbot()">
+            <div class="chat-icon">💬</div>
+        </div>
+        
+        <div class="chatbot-popup" id="chatbotPopup">
+            <div class="chatbot-header">
+                <h3>AiB Assistant</h3>
+                <button class="close-chat" onclick="toggleChatbot()">×</button>
+            </div>
+            <div class="chatbot-body">
+                <div class="chat-message bot-message">
+                    <div class="message-bubble">
+                        Hi! What can I do for you? 😊
+                    </div>
+                </div>
+            </div>
+            <div class="chatbot-input">
+                <input type="text" id="chatInput" placeholder="Type your message..." onkeypress="handleChatInput(event)">
+                <button onclick="sendMessage()">Send</button>
+            </div>
+        </div>
+    </div>
+
     <footer class="footer">
         <div class="footer-logo">
             <div>
@@ -102,5 +127,6 @@
         </div>
     </footer>
 
-    <script src="prediction-script.js"></script>
+    <script src="js/prediction.js"></script>
 </body>
+</html>

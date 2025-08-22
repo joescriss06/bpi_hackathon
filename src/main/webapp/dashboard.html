@@ -51,6 +51,31 @@
         </div>
     </main>
 
+    <!-- Chatbot Section -->
+    <div class="chatbot-container">
+        <div class="chatbot-button" onclick="toggleChatbot()">
+            <div class="chat-icon">💬</div>
+        </div>
+        
+        <div class="chatbot-popup" id="chatbotPopup">
+            <div class="chatbot-header">
+                <h3>AiB Assistant</h3>
+                <button class="close-chat" onclick="toggleChatbot()">×</button>
+            </div>
+            <div class="chatbot-body">
+                <div class="chat-message bot-message">
+                    <div class="message-bubble">
+                        Hi! What can I do for you? 😊
+                    </div>
+                </div>
+            </div>
+            <div class="chatbot-input">
+                <input type="text" id="chatInput" placeholder="Type your message..." onkeypress="handleChatInput(event)">
+                <button onclick="sendMessage()">Send</button>
+            </div>
+        </div>
+    </div>
+
     <footer class="footer">
         <div class="footer-logo">
             <div>
@@ -60,25 +85,7 @@
         </div>
     </footer>
 
-    <script>
-        function showAlert(message) {
-            alert(message);
-        }
-
-        // Add some interactive effects
-        document.addEventListener('DOMContentLoaded', function() {
-            const cards = document.querySelectorAll('.transaction-card, .welcome-card');
-            
-            cards.forEach(card => {
-                card.addEventListener('mouseenter', function() {
-                    this.style.transform = 'translateY(-2px)';
-                });
-                
-                card.addEventListener('mouseleave', function() {
-                    this.style.transform = 'translateY(0)';
-                });
-            });
-        });
-    </script>
+    <script src="js/dashboard.js"></script>
 </body>
 </html>
+
