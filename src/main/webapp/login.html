@@ -3,21 +3,48 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login</title>
+  <title>AiB Login</title>
   <link rel="stylesheet" href="css/login.css">
 </head>
 <body>
-  <div class="glass-container">
-    <h2>Welcome Back!</h2>
-    <form>
-      <input type="text" placeholder="Username" required>
-      <input type="password" placeholder="Password" required>
-      <button type="submit">Login</button>
-    </form>
-    <div class="links">
-      <p><a href="#">Forgot Password?</a></p>
-      <p>Don’t have an account? <a href="#">Register Now</a></p>
+  <div class="login-card">
+    <div class="logo">
+      <div>
+        <h2>AiB</h2>
+        <span>ALL IN BANKING</span>
+      </div>
+      <!-- Home icon link -->
+      <a href="index.html" class="home-icon">🏠</a>
     </div>
+    <h3>Welcome!</h3>
+    <input type="text" placeholder="Username">
+    <div class="password-wrapper">
+      <input type="password" placeholder="Password" id="passwordField">
+      <img src="css/images/eye-closed.png" alt="Toggle Password" class="toggle" id="toggleIcon" onclick="togglePassword()">
+    </div>
+    <button class="btn btn-login">Login</button>
+    <div class="forgot">Forgot password?</div>
+    <div class="or">OR</div>
+    <button class="btn btn-register" onclick="window.location.href='register.html'">Register Now</button>
   </div>
+
+  <script>
+    function togglePassword() {
+      const passwordField = document.getElementById('passwordField');
+      const toggleIcon = document.getElementById('toggleIcon');
+      
+      if (passwordField.type === 'password') {
+        // Show password
+        passwordField.type = 'text';
+        toggleIcon.src = 'css/images/eye-open.png'; // Open eye image
+        toggleIcon.alt = 'Hide Password';
+      } else {
+        // Hide password
+        passwordField.type = 'password';
+        toggleIcon.src = 'css/images/eye-closed.png'; // Closed eye image
+        toggleIcon.alt = 'Show Password';
+      }
+    }
+  </script>
 </body>
 </html>
