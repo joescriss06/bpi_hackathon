@@ -1,69 +1,160 @@
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: Arial, sans-serif;
-    }
+/* Background */
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  background-image: url("images/coinbg.png");
+  font-family: Arial, sans-serif;
+}
 
-    body {
-      height: 100vh;
-      background-image: url("images/coinbg.png"); 
-      background-repeat: no-repeat;
-      background-position: center;
-      background-size: cover;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
+.login-card {
+  margin: 40px;
+  width: 380px; 
+  padding: 40px; 
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  color: #222;
+  min-height: 480px; 
+}
 
-    .glass-container {
-      width: 350px;
-      padding: 40px;
-      border-radius: 20px;
-      background: rgba(255, 255, 255, 0.1);
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      text-align: center;
-    }
+/* Logo */
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px; 
+}
+.logo h2 {
+  margin: 0;
+  font-size: 24px; 
+  font-weight: bold;
+}
+.logo span {
+  font-size: 13px; 
+  color: #333;
+}
+.home-icon {
+  font-size: 24px; 
+  text-decoration: none;
+  color: inherit;
+  transition: opacity 0.3s ease;
+}
+.home-icon:hover {
+  opacity: 0.7;
+}
 
-    .glass-container h2 {
-      color: white;
-      margin-bottom: 20px;
-    }
+/* Title */
+.login-card h3 {
+  margin: 20px 0 30px 0; 
+  font-size: 26px; 
+  font-weight: normal;
+}
 
-    .glass-container input {
-      width: 100%;
-      padding: 12px;
-      margin: 10px 0;
-      border: none;
-      border-radius: 8px;
-      outline: none;
-    }
+/* Inputs */
+.login-card input {
+  width: 100%;
+  padding: 15px; 
+  margin: 15px 0; 
+  border: none;
+  border-radius: 10px; 
+  outline: none;
+  font-size: 15px; 
+  box-sizing: border-box;
+  background: rgba(255, 255, 255, 0.8);
+}
 
-    .glass-container button {
-      width: 100%;
-      padding: 12px;
-      margin-top: 15px;
-      border: none;
-      border-radius: 8px;
-      background: #007BFF;
-      color: white;
-      font-size: 16px;
-      cursor: pointer;
-      transition: 0.3s;
-    }
+/* Password wrapper - FIXED */
+.password-wrapper {
+  position: relative;
+  margin: 15px 0;
+}
+.password-wrapper input {
+  padding: 15px 50px 15px 15px; 
+  margin: 0; 
+}
+.password-wrapper .toggle {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  user-select: none;
+  /* Image sizing - ADDED */
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+}
+.password-wrapper .toggle:hover {
+  opacity: 1;
+}
 
-    .glass-container button:hover {
-      background: #0056b3;
-    }
+/* Buttons */
+.btn {
+  width: 100%;
+  padding: 15px;
+  margin-top: 15px; 
+  border: none;
+  border-radius: 10px; 
+  font-size: 16px; 
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+.btn-login {
+  background: #0096d6;
+  color: #fff;
+}
+.btn-login:hover {
+  background: #007bb5;
+  transform: translateY(-1px);
+}
+.btn-register {
+  background: #4b2c2c;
+  color: #fff;
+}
+.btn-register:hover {
+  background: #3a2222;
+  transform: translateY(-1px);
+}
 
-    .links {
-      margin-top: 15px;
-      color: white;
-      font-size: 14px;
-    }
-
-    .links a {
-      color: #00d4ff;
-      text-decoration: none;
-    }
+/* Extra text */
+.login-card .forgot {
+  text-align: center;
+  font-size: 14px; 
+  margin: 20px 0; 
+  color: #333;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+.forgot:hover {
+  color: #0096d6;
+}
+.or {
+  text-align: center;
+  margin: 20px 0; 
+  font-size: 14px; 
+  color: #777;
+  position: relative;
+}
+.or::before,
+.or::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 45%;
+  height: 1px;
+  background: rgba(119, 119, 119, 0.3);
+}
+.or::before {
+  left: 0;
+}
+.or::after {
+  right: 0;
+}
