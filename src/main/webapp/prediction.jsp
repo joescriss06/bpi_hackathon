@@ -41,7 +41,8 @@
 
                         <button class="check-prediction-btn" type="button" onclick="openPredictionModal()">Unlock your Projection</button>
                         <br><br>
-                        <button class="back-btn" onclick="goBack()">Go back to Dashboard</button>
+                        <button class="back-btn" onclick="location.href='dashboard.jsp'">Go back to Dashboard</button>
+
                     </div>
                 </div>
 

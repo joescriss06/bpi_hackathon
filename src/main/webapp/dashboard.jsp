@@ -25,10 +25,10 @@
                 </div>
                 <nav class="nav-links">
                     <a href="#" class="nav-item active">Home</a>
-                    <a href="#" class="nav-item">Transactions</a>
-                    <a href="#" class="nav-item">Payments</a>
-                    <a href="#" class="nav-item">Cards</a>
-                    <a href="#" class="nav-item">Settings</a>
+                    <a href="transactions.jsp" class="nav-item">Transactions</a>
+                    <a href="prediction.jsp" class="nav-item">Projections</a>
+                    <a href="#" class="nav-item">about us</a>
+                    <a href="index.jsp" class="nav-item">logout</a>
                 </nav>
                 <div class="header-actions">
                     <button class="notification-btn">🔔</button>

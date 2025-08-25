@@ -190,7 +190,7 @@
       <div class="welcome-text">? Welcome to the Family!</div>
       <div class="subtitle">Your registration is complete. Let's get started!</div>
       <div style="text-align:center; margin-top:20px;">
-        <button type="button" class="btn btn-primary" onclick="window.location.href='dashboard.html'">
+        <button type="button" class="btn btn-primary" onclick="window.location.href='dashboard.jsp'">
           Let's Get Started
         </button>
       </div>
