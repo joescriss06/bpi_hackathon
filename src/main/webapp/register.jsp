@@ -1,222 +1,202 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <title>AIB Registration</title>
-        <link rel="stylesheet" href="css/register.css"/>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/tesseract.js/4.1.1/tesseract.min.js"></script>
-    </head>
-    <body>
-        <div class="container">
-            <div class="header">
-                <div class="logo">
-                    <h1>AiB</h1>
-                    <div class="tagline">ALL IN BANKING</div>
-                </div>
-                <div class="home-icon" onclick="window.location.href = 'index.jsp'">?</div>
-            </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AIB Registration</title>
+  <link rel="stylesheet" href="css/register.css"/>
 
-            <div class="step-indicator">
-                <div class="step-dot active" data-step="1"></div>
-                <div class="step-dot" data-step="2"></div>
-                <div class="step-dot" data-step="3"></div>
-                <div class="step-dot" data-step="4"></div>
-                <div class="step-dot" data-step="5"></div>
-                <div class="step-dot" data-step="6"></div>
-            </div>
+  <script src="https://cdn.jsdelivr.net/npm/@zxing/library@latest/umd/index.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mrz@3.3.0/dist/mrz.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="logo">
+        <h1>AiB</h1>
+        <div class="tagline">ALL IN BANKING</div>
+      </div>
+      <div class="home-icon" onclick="window.location.href='index.jsp'">?</div>
+    </div>
 
-            <!-- Step 1: Contact Info -->
-            <div class="step active" id="step1">
-                <div class="welcome-text">Let's Get Started!</div>
-                <div class="subtitle">Enter your contact details</div>
-                <form id="contactForm">
-                    <div class="form-group">
-                        <input type="tel" id="phone" placeholder="Phone Number" required/>
-                    </div>
-                    <div class="form-group">
-                        <input type="email" id="email" placeholder="Email Address"/>
-                        <div class="optional-label">Optional</div>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Continue</button>
-                </form>
-            </div>
+    <!-- Step Indicator -->
+    <div class="step-indicator">
+      <div class="step-dot active" data-step="1"></div>
+      <div class="step-dot" data-step="2"></div>
+      <div class="step-dot" data-step="3"></div>
+      <div class="step-dot" data-step="4"></div>
+      <div class="step-dot" data-step="5"></div>
+      <div class="step-dot" data-step="6"></div>
+      <div class="step-dot" data-step="7"></div>
+    </div>
 
-            <!-- Step 2: Address + Nationality -->
-            <div class="step" id="step2">
-                <div class="welcome-text">Your Address</div>
-                <div class="subtitle">Enter your full address</div>
-                <form id="addressForm">
-                    <div class="form-group">
-                        <input type="text" id="street" placeholder="Street Address" required/>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" id="apartment" placeholder="Apartment, Suite, etc."/>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <input type="text" id="city" placeholder="City" required/>
-                        </div>
-                        <div class="form-group">
-                            <input type="text" id="province" placeholder="Province" required/>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <input type="number" id="postalCode" placeholder="Postal Code" maxlength="4"
-                               oninput="this.value=this.value.slice(0,4)" required/>
-                    </div>
-                    <div class="form-group">
-                        <select id="nationality" required>
-                            <option value="">-- Select Nationality --</option>
-                            <option>Philippines</option>
-                            <option>United States</option>
-                            <option>Canada</option>
-                            <option>United Kingdom</option>
-                            <option>Australia</option>
-                            <option>Japan</option>
-                            <option>Singapore</option>
-                            <option>Malaysia</option>
-                            <option>India</option>
-                            <option>China</option>
-                            <option>South Korea</option>
-                            <option>United Arab Emirates</option>
-                            <option>Saudi Arabia</option>
-                            <option>Germany</option>
-                            <option>France</option>
-                            <option>Italy</option>
-                            <option>Spain</option>
-                            <option>Indonesia</option>
-                            <option>Vietnam</option>
-                            <option>Thailand</option>
-                        </select>
-                    </div>
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-secondary" onclick="previousStep()">Back</button>
-                        <button type="submit" class="btn btn-primary">Continue</button>
-                    </div>
-                </form>
-            </div>
-
-            <!-- Step 3: ID Type Selection -->
-            <div class="step" id="step3">
-                <div class="welcome-text">ID Verification</div>
-                <div class="subtitle">Select your ID type</div>
-                <form id="idTypeForm">
-                    <div class="form-group">
-                        <select id="idType" required>
-                            <option value="">-- Select ID Type --</option>
-                            <option value="passport">Passport</option>
-                            <option value="umid">UMID</option>
-                            <option value="postal-id">Postal ID</option>
-                            <option value="prc-id">PRC ID</option>
-                            <option value="drivers-license">Driver's License</option>
-                            <option value="voters-id">Voter's ID</option>
-                            <option value="national-id">National ID</option>
-                        </select>
-                    </div>
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-secondary" onclick="previousStep()">Back</button>
-                        <button type="submit" class="btn btn-primary">Continue</button>
-                    </div>
-                </form>
-            </div>
-
-            <!-- Step 4: ID Upload & OCR -->
-            <div class="step" id="step4">
-                <div class="welcome-text">Upload Your ID</div>
-                <div class="subtitle">Take or upload a clear photo of your <span id="selectedIdTypeLabel">ID</span></div>
-
-                <div class="upload-section">
-                    <div class="upload-zone" id="uploadZone">
-                        <div class="upload-icon">?</div>
-                        <div class="upload-text">Click to upload or drag & drop</div>
-                        <div class="upload-subtext">Supports JPG, PNG (max 10MB)</div>
-                    </div>
-                    <input type="file" id="fileInput" accept="image/*" style="display:none"/>
-                </div>
-
-                <div class="preview-section" id="previewSection">
-                    <img class="preview-image" id="previewImage" alt="ID Preview"/>
-                    <div class="btn-group">
-                        <button class="btn btn-secondary" type="button" id="resetUploadBtn">Upload Different ID</button>
-                        <button class="btn btn-primary" type="button" id="scanBtn" disabled>Scan ID</button>
-                    </div>
-                </div>
-
-                <div class="processing" id="processing">
-                    <div class="spinner"></div>
-                    <div class="processing-text">Scanning and extracting information...</div>
-                </div>
-
-                <div class="status-message" id="ocrStatus" style="display:none;"></div>
-
-                <!-- Debug section (optional) -->
-                <div id="debugSection" style="display:none; background:#f0f0f0; padding:10px; margin:10px 0; border-radius:5px; font-size:12px;">
-                    <strong>Debug Info:</strong>
-                    <div id="debugText"></div>
-                </div>
-
-                <div class="btn-group">
-                    <button type="button" class="btn btn-secondary" onclick="previousStep()">Back</button>
-                    <button type="button" class="btn btn-primary" id="toReviewBtn" disabled>Continue</button>
-                </div>
-            </div>
-
-            <!-- Step 5: Review Info -->
-            <div class="step" id="step5">
-                <div class="welcome-text">Review Your Information</div>
-                <div class="subtitle">Please review all details before continuing</div>
-
-                <details open>
-                    <summary><strong>Contact Info</strong></summary>
-                    <div class="extracted-data" id="reviewContact"></div>
-                </details>
-
-                <details open>
-                    <summary><strong>Address & Nationality</strong></summary>
-                    <div class="extracted-data" id="reviewAddress"></div>
-                </details>
-
-                <details open>
-                    <summary><strong>ID Details</strong></summary>
-                    <div class="extracted-data" id="reviewID"></div>
-                    <div style="text-align:center;margin-top:10px">
-                        <img id="reviewPhoto" alt="ID Photo"
-                             style="max-width:100%;max-height:220px;border-radius:12px;display:none"/>
-                    </div>
-                </details>
-
-                <div class="btn-group">
-                    <button type="button" class="btn btn-secondary" onclick="previousStep()">Back</button>
-                    <button type="button" class="btn btn-primary" id="toPinBtn">Continue</button>
-                </div>
-            </div>
-
-            <!-- Step 6: PIN Setup -->
-            <div class="step" id="step6">
-                <div class="welcome-text">Set Up Your PIN</div>
-                <div class="subtitle">Create a 6-digit PIN and confirm it</div>
-                <form id="pinForm">
-                    <div class="form-group password-wrapper">
-                        <input type="password" inputmode="numeric" maxlength="6" pattern="\d{6}"
-                               placeholder="Enter 6-digit PIN" id="pinField" required/>
-                        <img src="css/images/eye-closed.png" alt="Toggle Password" class="toggle" id="togglePin">
-                    </div>
-                    <div class="form-group password-wrapper">
-                        <input type="password" inputmode="numeric" maxlength="6" pattern="\d{6}"
-                               placeholder="Confirm PIN" id="confirmPinField" required/>
-                        <img src="css/images/eye-closed.png" alt="Toggle Password" class="toggle" id="toggleConfirmPin">
-                    </div>
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-secondary" onclick="previousStep()">Back</button>
-                        <button type="submit" class="btn btn-primary">Complete Registration</button>
-                    </div>
-                </form>
-                <div class="status-message" id="finalStatus" style="display:none;"></div>
-            </div>
-
+    <!-- Step 1: Contact Info -->
+    <div class="step active" id="step1">
+      <div class="welcome-text">Let's Get Started!</div>
+      <div class="subtitle">Enter your contact details</div>
+      <form id="contactForm">
+        <div class="form-group">
+          <input type="tel" id="phone" placeholder="Phone Number" required/>
         </div>
-        <script src="js/register.js"></script>
-    </body>
+        <div class="form-group">
+          <input type="email" id="email" placeholder="Email Address"/>
+          <div class="optional-label">Optional</div>
+        </div>
+        <button type="submit" class="btn btn-primary">Continue</button>
+      </form>
+    </div>
+
+    <!-- Step 2: Address -->
+    <div class="step" id="step2">
+      <div class="welcome-text">Your Address</div>
+      <div class="subtitle">Enter your full address</div>
+      <form id="addressForm">
+        <div class="form-group">
+          <input type="text" id="street" placeholder="Street Address" required/>
+        </div>
+        <div class="form-group">
+          <input type="text" id="apartment" placeholder="Apartment, Suite, etc."/>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <input type="text" id="city" placeholder="City" required/>
+          </div>
+          <div class="form-group">
+            <input type="text" id="province" placeholder="Province" required/>
+          </div>
+        </div>
+        <div class="form-group">
+          <input type="number" id="postalCode" placeholder="Postal Code" maxlength="4"
+                 oninput="this.value=this.value.slice(0,4)" required/>
+        </div>
+        <div class="btn-group">
+          <button type="button" class="btn btn-secondary" onclick="previousStep()">Back</button>
+          <button type="submit" class="btn btn-primary">Continue</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Step 3: Scan Type Selection -->
+    <div class="step" id="step3">
+      <div class="welcome-text">ID Verification</div>
+      <div class="subtitle">Select scan type</div>
+      <form id="scanTypeForm">
+        <div class="form-group">
+          <select id="scanType" required>
+            <option value="">-- Select Scan Type --</option>
+            <option value="passport">Passport (MRZ)</option>
+            <option value="barcode">Barcode</option>
+            <option value="qrcode">QR Code</option>
+          </select>
+        </div>
+        <div class="btn-group">
+          <button type="button" class="btn btn-secondary" onclick="previousStep()">Back</button>
+          <button type="submit" class="btn btn-primary">Continue</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Step 4: Upload & Scan -->
+    <div class="step" id="step4">
+      <div class="welcome-text">Upload Your ID</div>
+      <div class="subtitle">Upload a clear image of your selected ID</div>
+
+      <div id="uploadArea" class="upload-zone">
+        <div class="upload-icon">?</div>
+        <div class="upload-text">Drag & Drop or Click to Upload</div>
+        <input type="file" id="fileInput" accept="image/*"/>
+      </div>
+
+      <div id="preview" class="preview-section">
+        <img id="previewImage" class="preview-image" alt="Preview"/>
+        <button type="button" class="btn btn-secondary" id="reuploadBtn" style="display:none">Upload a Different Image</button>
+      </div>
+
+      <div class="btn-group">
+        <button type="button" class="btn btn-secondary" onclick="previousStep()">Back</button>
+        <button type="button" class="btn btn-primary" id="scanBtn" disabled>Scan</button>
+      </div>
+
+      <div class="processing" id="processing" style="display:none;">
+        <div class="spinner"></div>
+        <div class="processing-text">Scanning and extracting information...</div>
+      </div>
+
+      <div class="status-message" id="ocrStatus" style="display:none;"></div>
+
+      <div class="btn-group">
+        <button type="button" class="btn btn-primary" id="toReviewBtn" disabled>Continue</button>
+      </div>
+    </div>
+
+    <!-- Step 5: Review & Edit -->
+    <div class="step" id="step5">
+      <div class="welcome-text">Review Your Information</div>
+      <div class="subtitle">Edit details if necessary before continuing</div>
+
+      <div class="extracted-data">
+        <p><b>Phone:</b> <span id="revPhone"></span></p>
+        <p><b>Email:</b> <span id="revEmail"></span></p>
+        <p><b>Address:</b> <span id="revAddress"></span></p>
+      </div>
+
+      <form id="reviewForm">
+        <div class="form-group"><input type="text" id="revLastName" placeholder="Last Name"/></div>
+        <div class="form-group"><input type="text" id="revFirstName" placeholder="First Name"/></div>
+        <div class="form-group"><input type="text" id="revMiddleName" placeholder="Middle Name"/></div>
+        <div class="form-group"><input type="text" id="revSuffix" placeholder="Suffix (optional)"/></div>
+        <div class="form-group"><input type="text" id="revGender" placeholder="Gender"/></div>
+        <div class="form-group"><input type="text" id="revDateOfBirth" placeholder="Date of Birth"/></div>
+        <div class="form-group"><input type="text" id="revNationality" placeholder="Nationality"/></div>
+      </form>
+
+      <div style="text-align:center;margin-top:10px">
+        <img id="reviewPhoto" alt="ID Photo"
+             style="max-width:100%;max-height:220px;border-radius:12px;display:none"/>
+      </div>
+
+      <div class="btn-group">
+        <button type="button" class="btn btn-secondary" onclick="previousStep()">Back</button>
+        <button type="button" class="btn btn-primary" id="toPinBtn">Continue</button>
+      </div>
+    </div>
+
+    <!-- Step 6: PIN Setup -->
+    <div class="step" id="step6">
+      <div class="welcome-text">Set Up Your PIN</div>
+      <div class="subtitle">Create a 6-digit PIN and confirm it</div>
+      <form id="pinForm">
+        <div class="form-group password-wrapper">
+          <input type="password" inputmode="numeric" maxlength="6" pattern="\d{6}"
+                 placeholder="Enter 6-digit PIN" id="pinField" required/>
+          <img src="css/images/eye-closed.png" alt="Toggle Password" class="toggle" id="togglePin">
+        </div>
+        <div class="form-group password-wrapper">
+          <input type="password" inputmode="numeric" maxlength="6" pattern="\d{6}"
+                 placeholder="Confirm PIN" id="confirmPinField" required/>
+          <img src="css/images/eye-closed.png" alt="Toggle Password" class="toggle" id="toggleConfirmPin">
+        </div>
+        <div class="btn-group">
+          <button type="button" class="btn btn-secondary" onclick="previousStep()">Back</button>
+          <button type="submit" class="btn btn-primary">Complete Registration</button>
+        </div>
+      </form>
+      <div class="status-message" id="finalStatus" style="display:none;"></div>
+    </div>
+
+    <!-- Step 7: Final Welcome -->
+    <div class="step" id="step7">
+      <div class="welcome-text">? Welcome to the Family!</div>
+      <div class="subtitle">Your registration is complete. Let's get started!</div>
+      <div style="text-align:center; margin-top:20px;">
+        <button type="button" class="btn btn-primary" onclick="window.location.href='dashboard.html'">
+          Let's Get Started
+        </button>
+      </div>
+    </div>
+
+  </div>
+  <script src="js/register.js"></script>
+</body>
 </html>
