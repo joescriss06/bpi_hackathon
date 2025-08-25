@@ -1083,3 +1083,165 @@ html {
         transform: translateY(0);
     }
 }
+
+/* ===== Base Modal Styles ===== */
+.pred-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(6px);
+}
+
+/* When open */
+.pred-modal.show {
+  display: flex;
+  animation: fadeBackdrop 0.3s ease forwards;
+}
+
+/* ===== Modal Content ===== */
+.pred-modal__content {
+  background: #ffffff;
+  padding: 3rem 3.5rem;
+  border-radius: 20px;
+  max-width: 850px;   /* bigger modal */
+  width: 95%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+  animation: fadeInUp 0.35s ease;
+  font-family: "Inter", sans-serif;
+  color: #222;
+}
+
+/* ===== Close Button ===== */
+.pred-modal__close {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  border: none;
+  background: none;
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #666;
+  cursor: pointer;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.pred-modal__close:hover {
+  color: #000;
+  transform: rotate(90deg);
+}
+
+/* ===== Step Content ===== */
+.pred-step {
+  display: none;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+  margin-bottom: 2rem;
+}
+
+.pred-step.active {
+  display: block;
+}
+
+.pred-step.fade-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===== Form Elements ===== */
+.pred-step label {
+  display: block;
+  font-weight: 600;
+  font-size: 1.05rem;
+  margin-bottom: 0.6rem;
+  color: #111;
+}
+
+.pred-step input,
+.pred-step select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1.5px solid #d1d5db;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-family: "Inter", sans-serif;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.pred-step input:focus,
+.pred-step select:focus {
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+  outline: none;
+}
+
+/* ===== Wizard Navigation ===== */
+.pred-wizard__nav {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2rem;
+  gap: 1rem;
+}
+
+.prevBtn, .nextBtn, .submitBtn {
+  flex: 1;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  border: none;
+  padding: 0.85rem 1.5rem;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.25s ease, transform 0.2s ease;
+}
+
+.prevBtn, .nextBtn, .submitBtn {
+  background: #3730a3;
+  transform: translateY(-2px);
+}
+
+/* ===== Custom Scrollbar ===== */
+.pred-modal__content::-webkit-scrollbar {
+  width: 8px;
+}
+.pred-modal__content::-webkit-scrollbar-track {
+  background: transparent;
+}
+.pred-modal__content::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 8px;
+}
+.pred-modal__content::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.4);
+}
+
+/* ===== Animations ===== */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes fadeBackdrop {
+  from {
+    background: rgba(0, 0, 0, 0);
+    backdrop-filter: blur(0px);
+  }
+  to {
+    background: rgba(0, 0, 0, 0.65);
+    backdrop-filter: blur(6px);
+  }
+}

@@ -1,1087 +1,282 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+function showAlert(message) {
+    alert(message);
 }
 
-body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    min-height: 100vh;
-    color: #1a1a1a;
+function goBack() {
+    // In a real application, this would navigate back to the dashboard
+    alert('Navigating back to dashboard...');
+    // window.history.back(); // Uncomment this for actual navigation
 }
 
-/* Header Styles */
-.header {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(20px);
-    padding: 20px 30px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+// Chatbot functionality
+function toggleChatbot() {
+    const chatbotPopup = document.getElementById('chatbotPopup');
+    chatbotPopup.classList.toggle('show');
 }
 
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.logo-text {
-    font-size: 28px;
-    font-weight: 800;
-    color: #667eea;
-}
-
-.logo-subtext {
-    font-size: 10px;
-    color: #666;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    font-weight: 500;
-}
-
-.nav-links {
-    display: flex;
-    align-items: center;
-    gap: 30px;
-}
-
-.nav-links a {
-    color: #666;
-    text-decoration: none;
-    font-weight: 500;
-    transition: color 0.3s ease;
-}
-
-.nav-links a:hover {
-    color: #667eea;
-}
-
-.logout-btn {
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    color: white;
-    padding: 12px 24px;
-    border: none;
-    border-radius: 12px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.logout-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
-}
-
-/* Main Content */
-.main-content {
-    padding: 40px 30px;
-    max-width: 1400px;
-    margin: 0 auto;
-}
-
-/* Welcome Section */
-.welcome-section {
-    margin-bottom: 40px;
-}
-
-.welcome-card {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(20px);
-    border-radius: 24px;
-    padding: 40px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 40px;
-    align-items: center;
-}
-
-.welcome-title {
-    font-size: 32px;
-    font-weight: 700;
-    color: #1a1a1a;
-    margin-bottom: 8px;
-}
-
-.welcome-subtitle {
-    font-size: 18px;
-    color: #666;
-    margin-bottom: 24px;
-}
-
-.balance-label {
-    font-size: 16px;
-    color: #666;
-    margin-bottom: 8px;
-    font-weight: 500;
-}
-
-.current-balance {
-    font-size: 36px;
-    font-weight: 800;
-    color: #1a1a1a;
-}
-
-.balance-change {
-    font-size: 16px;
-    color: #10b981;
-    font-weight: 600;
-    margin-top: 8px;
-}
-
-.prediction-preview {
-    text-align: right;
-}
-
-.prediction-preview h3 {
-    font-size: 24px;
-    font-weight: 700;
-    color: #1a1a1a;
-    margin-bottom: 12px;
-}
-
-.prediction-preview p {
-    font-size: 16px;
-    color: #666;
-    line-height: 1.5;
-    margin-bottom: 24px;
-}
-
-.check-prediction-btn {
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    color: white;
-    padding: 16px 32px;
-    border: none;
-    border-radius: 16px;
-    font-weight: 600;
-    font-size: 16px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.check-prediction-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
-}
-
-/* Cards Section */
-.cards-section {
-    margin-bottom: 40px;
-}
-
-.balance-cards {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-}
-
-.card {
-    padding: 24px;
-    border-radius: 20px;
-    backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    transition: all 0.3s ease;
-    cursor: pointer;
-}
-
-.card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
-}
-
-.debit-card {
-    background: linear-gradient(135deg, #1e3a8a, #3b82f6);
-    color: white;
-}
-
-.credit-card {
-    background: linear-gradient(135deg, #dc2626, #f87171);
-    color: white;
-}
-
-.add-card {
-    background: rgba(255, 255, 255, 0.1);
-    border: 2px dashed rgba(255, 255, 255, 0.3);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    color: white;
-}
-
-.card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 16px;
-}
-
-.card-type {
-    font-size: 14px;
-    opacity: 0.9;
-}
-
-.card-logo {
-    font-weight: 700;
-    font-size: 14px;
-}
-
-.card-balance {
-    font-size: 24px;
-    font-weight: 700;
-    margin-bottom: 8px;
-}
-
-.card-number {
-    font-size: 16px;
-    opacity: 0.9;
-}
-
-.add-icon {
-    font-size: 32px;
-    margin-bottom: 8px;
-}
-
-/* Overview Section */
-.overview-section {
-    margin-bottom: 40px;
-}
-
-.income-spending {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 24px;
-}
-
-.overview-card {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(20px);
-    border-radius: 20px;
-    padding: 24px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-}
-
-.overview-card h4 {
-    font-size: 16px;
-    color: #666;
-    margin-bottom: 12px;
-}
-
-.amount {
-    font-size: 28px;
-    font-weight: 700;
-    margin-bottom: 16px;
-}
-
-.amount.income {
-    color: #10b981;
-}
-
-.amount.spending {
-    color: #ef4444;
-}
-
-.progress-bar {
-    height: 8px;
-    background: #f3f4f6;
-    border-radius: 4px;
-    overflow: hidden;
-}
-
-.progress {
-    height: 100%;
-    border-radius: 4px;
-    transition: width 0.3s ease;
-}
-
-.income-progress {
-    background: linear-gradient(90deg, #10b981, #34d399);
-    width: 75%;
-}
-
-.spending-progress {
-    background: linear-gradient(90deg, #ef4444, #f87171);
-    width: 60%;
-}
-
-/* Content Section (Original Prediction Area) */
-.content-section {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 40px;
-    align-items: start;
-    scroll-margin-top: 100px;
-}
-
-.left-section {
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-}
-
-.welcome-text h1 {
-    font-size: 36px;
-    font-weight: bold;
-    color: white;
-    margin-bottom: 5px;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-}
-
-.welcome-text h2 {
-    font-size: 24px;
-    font-weight: normal;
-    color: white;
-    line-height: 1.3;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-}
-
-.prediction-card {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(20px);
-    border-radius: 24px;
-    padding: 32px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-}
-
-.prediction-card h3 {
-    font-size: 28px;
-    color: #1a1a1a;
-    margin-bottom: 32px;
-    text-align: center;
-    font-weight: 700;
-}
-
-.prediction-timeline {
-    margin-bottom: 32px;
-}
-
-.timeline-item {
-    display: flex;
-    gap: 20px;
-    margin-bottom: 24px;
-    align-items: flex-start;
-}
-
-.timeline-marker {
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    margin-top: 4px;
-    flex-shrink: 0;
-}
-
-.timeline-marker.year1 {
-    background: linear-gradient(135deg, #10b981, #34d399);
-}
-
-.timeline-marker.year3 {
-    background: linear-gradient(135deg, #f59e0b, #fbbf24);
-}
-
-.timeline-marker.year5 {
-    background: linear-gradient(135deg, #667eea, #764ba2);
-}
-
-.timeline-content h4 {
-    font-size: 18px;
-    font-weight: 700;
-    color: #1a1a1a;
-    margin-bottom: 8px;
-}
-
-.timeline-content p {
-    font-size: 16px;
-    line-height: 1.5;
-    color: #4b5563;
-}
-
-.prediction-details {
-    font-size: 14px;
-    line-height: 1.6;
-    margin-bottom: 15px;
-    color: #4b5563;
-    text-align: justify;
-}
-
-.prediction-details strong {
-    font-weight: 600;
-    color: #1a1a1a;
-}
-
-.recommendation {
-    background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
-    border-radius: 16px;
-    padding: 20px;
-    margin-bottom: 32px;
-}
-
-.recommendation p {
-    font-size: 14px;
-    line-height: 1.6;
-    color: #374151;
-}
-
-.back-btn {
-    background: linear-gradient(135deg, #374151, #1f2937);
-    color: white;
-    padding: 16px 32px;
-    border: none;
-    border-radius: 16px;
-    cursor: pointer;
-    font-weight: 600;
-    font-size: 16px;
-    transition: all 0.3s ease;
-    width: 100%;
-}
-
-.back-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(55, 65, 81, 0.4);
-}
-
-.right-section {
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-}
-
-.info-card {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(20px);
-    border-radius: 24px;
-    padding: 32px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-}
-
-.main-info h3 {
-    font-size: 24px;
-    color: #1a1a1a;
-    margin-bottom: 24px;
-    font-weight: 700;
-}
-
-.benefit-list {
-    margin-bottom: 24px;
-}
-
-.benefit-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 16px;
-    margin-bottom: 20px;
-}
-
-.benefit-icon {
-    font-size: 24px;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
-    border-radius: 12px;
-    flex-shrink: 0;
-}
-
-.benefit-item p {
-    font-size: 16px;
-    color: #4b5563;
-    line-height: 1.5;
-    margin: 0;
-}
-
-.cta-text {
-    font-size: 16px;
-    line-height: 1.6;
-    margin-bottom: 24px;
-    color: #374151;
-}
-
-.create-account-btn {
-    background: linear-gradient(135deg, #dc2626, #ef4444);
-    color: white;
-    padding: 16px 32px;
-    border: none;
-    border-radius: 16px;
-    cursor: pointer;
-    font-weight: 600;
-    font-size: 16px;
-    transition: all 0.3s ease;
-    width: 100%;
-}
-
-.create-account-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(220, 38, 38, 0.4);
-}
-
-.feature-cards {
-    display: grid;
-    gap: 16px;
-}
-
-.feature-card {
-    background: rgba(255, 255, 255, 0.8);
-    backdrop-filter: blur(10px);
-    border-radius: 16px;
-    padding: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    text-align: center;
-    transition: all 0.3s ease;
-    cursor: pointer;
-}
-
-.feature-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-    background: rgba(255, 255, 255, 0.95);
-}
-
-.feature-card .card-icon {
-    font-size: 28px;
-    margin-bottom: 12px;
-}
-
-.feature-card h4 {
-    font-size: 16px;
-    color: #1a1a1a;
-    margin-bottom: 8px;
-    font-weight: 600;
-}
-
-.feature-card p {
-    font-size: 14px;
-    color: #6b7280;
-    line-height: 1.4;
-}
-
-.footer {
-    position: fixed;
-    bottom: 20px;
-    left: 30px;
-}
-
-.footer-logo {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    opacity: 0.7;
-}
-
-.footer-logo-text {
-    font-size: 20px;
-    font-weight: bold;
-    color: white;
-}
-
-.footer-logo-subtext {
-    font-size: 8px;
-    color: white;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-/* Chatbot Styles */
-.chatbot-container {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    z-index: 1000;
-}
-
-.chatbot-button {
-    width: 60px;
-    height: 60px;
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4);
-    transition: all 0.3s ease;
-    animation: pulse 2s infinite;
-}
-
-.chatbot-button:hover {
-    transform: scale(1.1);
-    box-shadow: 0 6px 25px rgba(102, 126, 234, 0.6);
-}
-
-.chat-icon {
-    font-size: 24px;
-    color: white;
-}
-
-@keyframes pulse {
-    0% {
-        box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4);
-    }
-    50% {
-        box-shadow: 0 4px 20px rgba(102, 126, 234, 0.7);
-    }
-    100% {
-        box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4);
+function handleChatInput(event) {
+    if (event.key === 'Enter') {
+        sendMessage();
     }
 }
 
-.chatbot-popup {
-    position: absolute;
-    bottom: 80px;
-    right: 0;
-    width: 350px;
-    height: 450px;
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(20px);
-    border-radius: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-    display: none;
-    flex-direction: column;
-    overflow: hidden;
-    animation: slideUp 0.3s ease;
-}
+function sendMessage() {
+    const chatInput = document.getElementById('chatInput');
+    const message = chatInput.value.trim();
 
-.chatbot-popup.show {
-    display: flex;
-}
+    if (message) {
+        addMessage(message, 'user');
+        chatInput.value = '';
 
-@keyframes slideUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
+        // Simulate bot response
+        setTimeout(() => {
+            const botResponse = getBotResponse(message);
+            addMessage(botResponse, 'bot');
+        }, 1000);
     }
 }
 
-.chatbot-header {
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    color: white;
-    padding: 15px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+function addMessage(message, sender) {
+    const chatBody = document.querySelector('.chatbot-body');
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `chat-message ${sender}-message`;
+
+    const bubbleDiv = document.createElement('div');
+    bubbleDiv.className = 'message-bubble';
+    bubbleDiv.textContent = message;
+
+    messageDiv.appendChild(bubbleDiv);
+    chatBody.appendChild(messageDiv);
+
+    // Scroll to bottom
+    chatBody.scrollTop = chatBody.scrollHeight;
 }
 
-.chatbot-header h3 {
-    font-size: 16px;
-    margin: 0;
-    font-weight: 600;
-}
+function getBotResponse(userMessage) {
+    const message = userMessage.toLowerCase();
 
-.close-chat {
-    background: none;
-    border: none;
-    color: white;
-    font-size: 20px;
-    cursor: pointer;
-    padding: 0;
-    width: 25px;
-    height: 25px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    transition: background 0.3s ease;
-}
-
-.close-chat:hover {
-    background: rgba(255, 255, 255, 0.2);
-}
-
-.chatbot-body {
-    flex: 1;
-    padding: 20px;
-    overflow-y: auto;
-    background: linear-gradient(135deg, #f8fafc, #f1f5f9);
-}
-
-.chat-message {
-    margin-bottom: 15px;
-    display: flex;
-}
-
-.bot-message {
-    justify-content: flex-start;
-}
-
-.user-message {
-    justify-content: flex-end;
-}
-
-.message-bubble {
-    max-width: 80%;
-    padding: 12px 16px;
-    border-radius: 18px;
-    font-size: 14px;
-    line-height: 1.4;
-}
-
-.bot-message .message-bubble {
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    color: white;
-    border-bottom-left-radius: 4px;
-}
-
-.user-message .message-bubble {
-    background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
-    color: #1a1a1a;
-    border-bottom-right-radius: 4px;
-}
-
-.chatbot-input {
-    padding: 15px 20px;
-    background: white;
-    border-top: 1px solid rgba(0, 0, 0, 0.1);
-    display: flex;
-    gap: 10px;
-}
-
-.chatbot-input input {
-    flex: 1;
-    padding: 10px 15px;
-    border: 1px solid #e5e7eb;
-    border-radius: 20px;
-    font-size: 14px;
-    outline: none;
-    transition: border-color 0.3s ease;
-}
-
-.chatbot-input input:focus {
-    border-color: #667eea;
-}
-
-.chatbot-input button {
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 20px;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: 500;
-    transition: all 0.3s ease;
-}
-
-.chatbot-input button:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
-}
-
-/* Responsive Design */
-@media (max-width: 1024px) {
-    .content-section {
-        grid-template-columns: 1fr;
-        gap: 30px;
-    }
-    
-    .welcome-card {
-        grid-template-columns: 1fr;
-        gap: 30px;
-        text-align: center;
-    }
-    
-    .prediction-preview {
-        text-align: center;
-    }
-    
-    .balance-cards {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    
-    .income-spending {
-        grid-template-columns: 1fr;
+    if (message.includes('prediction') || message.includes('future')) {
+        return 'Based on your current savings pattern, you\'ll reach ₱96,000 in 5 years! Would you like me to explain the investment options?';
+    } else if (message.includes('bpi') || message.includes('account')) {
+        return 'I can help you create a BPI account in just 2 minutes! You\'ll need one valid ID. Should I guide you through the process?';
+    } else if (message.includes('investment') || message.includes('invest')) {
+        return 'Great choice! BPI Investment Funds and UITFs can help your money grow faster than regular savings. Want to see recommended funds?';
+    } else if (message.includes('insurance') || message.includes('protection')) {
+        return 'Health and education insurance will protect your savings from unexpected expenses. Would you like to see coverage options?';
+    } else if (message.includes('balance') || message.includes('money')) {
+        return 'Your current balance is ₱2,500.78. At this rate, you\'re on track to meet your savings goals!';
+    } else if (message.includes('help') || message.includes('support')) {
+        return 'I can help you with: Savings predictions, BPI account creation, Investment options, Insurance plans, and Financial planning.';
+    } else if (message.includes('hello') || message.includes('hi')) {
+        return 'Hello! I\'m here to help you understand your financial prediction. What would you like to know?';
+    } else if (message.includes('thank')) {
+        return 'You\'re welcome! Remember, starting your savings journey early is the best decision for your future!';
+    } else {
+        return 'That\'s an interesting question about "' + userMessage + '". Let me connect you with our financial advisor for personalized guidance.';
     }
 }
 
-@media (max-width: 768px) {
-    .header {
-        padding: 15px 20px;
+// Add interactive effects
+document.addEventListener('DOMContentLoaded', function () {
+    const cards = document.querySelectorAll('.feature-card, .prediction-card, .info-card');
+
+    cards.forEach(card => {
+        card.addEventListener('mouseenter', function () {
+            this.style.transform = 'translateY(-2px)';
+        });
+
+        card.addEventListener('mouseleave', function () {
+            this.style.transform = 'translateY(0)';
+        });
+    });
+
+    // Add click handlers for feature cards
+    const featureCards = document.querySelectorAll('.feature-card');
+    featureCards.forEach((card, index) => {
+        card.addEventListener('click', function () {
+            const features = [
+                'Smart Savings feature - AI-powered automatic transfers',
+                'Investment Tracker - Real-time portfolio monitoring',
+                'Protection Plan - Comprehensive insurance coverage'
+            ];
+            showAlert(`Learn more about: ${features[index]}`);
+        });
+    });
+
+    // Animate cards on load
+    const animatedElements = document.querySelectorAll('.prediction-card, .info-card, .feature-card');
+    animatedElements.forEach((element, index) => {
+        element.style.opacity = '0';
+        element.style.transform = 'translateY(20px)';
+
+        setTimeout(() => {
+            element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            element.style.opacity = '1';
+            element.style.transform = 'translateY(0)';
+        }, index * 200);
+    });
+
+    // Close chatbot when clicking outside
+    document.addEventListener('click', function (event) {
+        const chatbotContainer = document.querySelector('.chatbot-container');
+        const chatbotPopup = document.getElementById('chatbotPopup');
+
+        if (!chatbotContainer.contains(event.target) && chatbotPopup.classList.contains('show')) {
+            chatbotPopup.classList.remove('show');
+        }
+    });
+});
+
+// ---------- Modal control ----------
+function openPredictionModal() {
+    const modal = document.getElementById('predictionModal');
+    modal.classList.add('show');
+    currentStep = 1;
+    renderStep();
+}
+
+function closePredictionModal() {
+    const modal = document.getElementById('predictionModal');
+    modal.classList.remove('show');
+}
+
+// ---------- Wizard state ----------
+let currentStep = 1;
+
+function renderStep() {
+    const steps = document.querySelectorAll('.pred-step');
+    steps.forEach(s => s.classList.remove('active', 'fade-in'));
+
+    const active = document.querySelector(`.pred-step[data-step="${currentStep}"]`);
+    if (active) {
+        active.classList.add('active');
+        // trigger fade animation
+        setTimeout(() => active.classList.add('fade-in'), 10);
     }
-    
-    .main-content {
-        padding: 20px;
-    }
-    
-    .welcome-card {
-        padding: 24px;
-    }
-    
-    .welcome-title {
-        font-size: 24px;
-    }
-    
-    .current-balance {
-        font-size: 28px;
-    }
-    
-    .welcome-text h1 {
-        font-size: 28px;
-    }
-    
-    .welcome-text h2 {
-        font-size: 20px;
-    }
-    
-    .balance-cards {
-        grid-template-columns: 1fr;
-        gap: 16px;
-    }
-    
-    .nav-links {
-        gap: 15px;
-    }
-    
-    .nav-links a {
-        font-size: 14px;
-    }
-    
-    .logout-btn {
-        padding: 10px 16px;
-        font-size: 14px;
-    }
-    
-    .prediction-card, .main-info {
-        padding: 24px;
-    }
-    
-    .prediction-card h3 {
-        font-size: 24px;
-    }
-    
-    .timeline-content h4 {
-        font-size: 16px;
-    }
-    
-    .timeline-content p {
-        font-size: 14px;
-    }
-    
-    .chatbot-popup {
-        width: 300px;
-        height: 400px;
-    }
-    
-    .chatbot-container {
-        bottom: 15px;
-        right: 15px;
+
+    // nav buttons
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const submitBtn = document.getElementById('submitBtn');
+
+    prevBtn.classList.toggle('hidden', currentStep === 1);
+    nextBtn.classList.toggle('hidden', currentStep === steps.length);
+    submitBtn.classList.toggle('hidden', currentStep !== steps.length);
+}
+
+function nextStep() {
+    const steps = document.querySelectorAll('.pred-step');
+    if (currentStep < steps.length) {
+        currentStep += 1;
+        renderStep();
     }
 }
 
-@media (max-width: 480px) {
-    .header {
-        flex-direction: column;
-        gap: 20px;
-        padding: 20px;
-    }
-    
-    .nav-links {
-        width: 100%;
-        justify-content: center;
-    }
-    
-    .welcome-card {
-        padding: 20px;
-    }
-    
-    .welcome-title {
-        font-size: 20px;
-    }
-    
-    .current-balance {
-        font-size: 24px;
-    }
-    
-    .card {
-        padding: 20px;
-    }
-    
-    .card-balance {
-        font-size: 20px;
-    }
-    
-    .overview-card {
-        padding: 20px;
-    }
-    
-    .amount {
-        font-size: 24px;
+function prevStep() {
+    if (currentStep > 1) {
+        currentStep -= 1;
+        renderStep();
     }
 }
 
-/* Toast Notification Styles */
-.toast {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(20px);
-    border-radius: 16px;
-    padding: 16px 24px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    transform: translateX(400px);
-    opacity: 0;
-    transition: all 0.3s ease;
-    z-index: 10000;
-    max-width: 350px;
-}
+// ---------- Compute prediction ----------
+document.getElementById('predictionForm').addEventListener('submit', function (e) {
+    e.preventDefault();
 
-.toast.show {
-    transform: translateX(0);
-    opacity: 1;
-}
+    const form = new FormData(this);
+    const currentSavings = toNum(form.get('currentSavings'));
+    const monthlySavings = toNum(form.get('monthlySavings'));
+    const monthlyDebtPayment = toNum(form.get('monthlyDebtPayment'));
+    const goalAmount = toNum(form.get('goalAmount'));
+    const goal = (form.get('goal') || '').toString();
+    const horizon = (form.get('horizon') || '').toString();
 
-.toast-content {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
+    // Effective monthly capacity
+    let netMonthlySave = Math.max(0, monthlySavings - monthlyDebtPayment);
 
-.toast-icon {
-    font-size: 20px;
-}
+    // Timelines
+    const oneYear = currentSavings + netMonthlySave * 12;
+    const threeYears = currentSavings + netMonthlySave * 36;
+    const fiveYears = currentSavings + netMonthlySave * 60;
 
-.toast-message {
-    color: #1a1a1a;
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 1.4;
-}
-
-/* Typing Indicator Styles */
-.typing-indicator .message-bubble {
-    padding: 16px 20px;
-}
-
-.typing-dots {
-    display: flex;
-    gap: 4px;
-}
-
-.typing-dots span {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.6);
-    animation: typingDots 1.4s infinite;
-}
-
-.typing-dots span:nth-child(2) {
-    animation-delay: 0.2s;
-}
-
-.typing-dots span:nth-child(3) {
-    animation-delay: 0.4s;
-}
-
-@keyframes typingDots {
-    0%, 60%, 100% {
-        transform: translateY(0);
-        opacity: 0.4;
+    // Months to reach goal
+    let monthsToGoal = null;
+    if (goalAmount > currentSavings && netMonthlySave > 0) {
+        monthsToGoal = Math.ceil((goalAmount - currentSavings) / netMonthlySave);
     }
-    30% {
-        transform: translateY(-10px);
-        opacity: 1;
+
+    // Build advice lines
+    const tips = [];
+    if (netMonthlySave === 0) {
+        tips.push("Your monthly savings capacity is currently ₱0 after debt payments—consider trimming expenses or refinancing debt.");
+    } else if (netMonthlySave < 1000) {
+        tips.push("Start small but consistent. Aim to increase monthly savings by ₱200–₱500 using automatic transfers.");
+    } else {
+        tips.push("Great! Automate transfers on payday to lock in your savings habit.");
     }
-}
 
-/* Enhanced Card Animations */
-.card, .feature-card, .overview-card {
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.card:hover, .feature-card:hover, .overview-card:hover {
-    transform: translateY(-4px) scale(1.02);
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
-}
-
-.card:active, .feature-card:active, .overview-card:active {
-    transform: translateY(-2px) scale(1.01);
-}
-
-/* Enhanced Timeline Styles */
-.timeline-item {
-    opacity: 0;
-    transform: translateX(-20px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-}
-
-.timeline-item.animated {
-    opacity: 1;
-    transform: translateX(0);
-}
-
-/* Enhanced Progress Bar Animations */
-.progress {
-    width: 0%;
-    transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.progress.animated {
-    width: var(--target-width);
-}
-
-/* Smooth Scrolling */
-html {
-    scroll-behavior: smooth;
-}
-
-/* Enhanced Focus States */
-.check-prediction-btn:focus,
-.create-account-btn:focus,
-.back-btn:focus,
-.logout-btn:focus {
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.3);
-}
-
-.chatbot-input input:focus {
-    border-color: #667eea;
-    box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.2);
-}
-
-/* Loading States */
-.loading {
-    position: relative;
-    overflow: hidden;
-}
-
-.loading::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-    animation: shimmer 2s infinite;
-}
-
-@keyframes shimmer {
-    to {
-        left: 100%;
+    // Emergency fund advice
+    const monthsReserve = toNum(form.get('monthsReserve'));
+    if (monthsReserve >= 3) {
+        tips.push(`Target an emergency fund of ~${monthsReserve} months of expenses before investing.`);
+    } else {
+        tips.push("Build at least 3 months of expenses as an emergency fund before investing.");
     }
-}
 
-/* Enhanced Mobile Responsiveness */
-@media (max-width: 480px) {
-    .toast {
-        right: 10px;
-        left: 10px;
-        max-width: none;
-        transform: translateY(-100px);
+    if ((form.get('openInvest') || 'no') === 'yes') {
+        tips.push("Once you’ve built your emergency fund, explore conservative UITFs or bond funds for gradual growth.");
     }
-    
-    .toast.show {
-        transform: translateY(0);
-    }
-}
 
+    // Render into prediction card
+    const card = document.querySelector('.prediction-card');
+    if (card) {
+        card.innerHTML = `
+      <h3>Your Projection</h3>
+      <p class="prediction-details">
+        With your current plan, you can save about 
+        <strong>₱${fmt(oneYear)}</strong> in 1 year, 
+        <strong>₱${fmt(threeYears)}</strong> in 3 years, and 
+        <strong>₱${fmt(fiveYears)}</strong> in 5 years.
+      </p>
+      ${
+                monthsToGoal !== null
+                ? `<p class="prediction-details">
+              You can reach your <strong>${escapeHTML(goal)}</strong> goal of 
+              <strong>₱${fmt(goalAmount)}</strong> in about 
+              <strong>${monthsToGoal}</strong> month${monthsToGoal === 1 ? '' : 's'} 
+              (assuming steady savings).
+            </p>`
+                : `<p class="prediction-details">
+              Set a realistic goal amount and a positive monthly savings to get a time-to-goal estimate.
+            </p>`
+                }
+      <h4>Advice</h4>
+      <ul class="prediction-details">
+        ${tips.map(t => `<li>${escapeHTML(t)}</li>`).join('')}
+      </ul>
+      <button class="back-btn" onclick="goBack()">Go back to Dashboard</button>
+    `;
+        card.scrollIntoView({behavior: 'smooth', block: 'start'});
+    }
+
+    // Close modal
+    closePredictionModal();
+});
+
+// ---------- Helpers ----------
+function toNum(v) {
+    const n = parseFloat((v || '').toString().replace(/[, ]/g, ''));
+    return Number.isFinite(n) ? n : 0;
+}
+function fmt(n) {
+    return Math.round(n).toLocaleString('en-PH');
+}
+function escapeHTML(s) {
+    return (s || '').toString()
+            .replaceAll('&', '&amp;')
+            .replaceAll('<', '&lt;')
+            .replaceAll('>', '&gt;')
+            .replaceAll('"', '&quot;')
+            .replaceAll("'", "&#39;");
+}
  
