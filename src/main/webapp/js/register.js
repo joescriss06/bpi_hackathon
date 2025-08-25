@@ -1,26 +1,28 @@
-// === STEP 5 SCROLL FIX ===
+// === STEP SCROLL FIXES ===
 document.addEventListener("DOMContentLoaded", function () {
-  var step5 = document.getElementById("step5");
-  if (step5) {
-    step5.style.maxHeight = "400px";
-    step5.style.overflowY = "auto";
-  }
+  ["step4", "step5"].forEach(stepId => {
+    const el = document.getElementById(stepId);
+    if (el) {
+      el.style.maxHeight = "400px";
+      el.style.overflowY = "auto";
+    }
+  });
 });
 
 var currentStep = 1;
-var uploadedFile = null;
-var photoDataURL = null;
-var debugMode = false;
+var debugMode = true;
 
 var contactInfo = {};
 var addressInfo = {};
 var idInfo = {
-  idType: "",
+  scanType: "",
   firstName: "",
   lastName: "",
   middleName: "",
+  suffix: "",
   dateOfBirth: "",
-  gender: ""
+  gender: "",
+  nationality: ""
 };
 
 // === STEP HANDLING ===
@@ -37,7 +39,7 @@ function updateStepIndicator() {
 }
 
 function nextStep() {
-  if (currentStep < 6) {
+  if (currentStep < 7) { // changed from 6 → 7
     document.getElementById("step" + currentStep).classList.remove("active");
     currentStep++;
     document.getElementById("step" + currentStep).classList.add("active");
@@ -59,7 +61,6 @@ document.getElementById("phone").setAttribute("inputmode", "numeric");
 document.getElementById("phone").addEventListener("input", function (e) {
   e.target.value = e.target.value.replace(/\D/g, "");
 });
-
 document.getElementById("contactForm").addEventListener("submit", function (e) {
   e.preventDefault();
   var phone = document.getElementById("phone").value.trim();
@@ -78,95 +79,84 @@ document.getElementById("addressForm").addEventListener("submit", function (e) {
   var city = document.getElementById("city").value.trim();
   var province = document.getElementById("province").value.trim();
   var postalCode = document.getElementById("postalCode").value.trim();
-  var nationality = document.getElementById("nationality").value.trim();
-  if (!street || !city || !province || !postalCode || !nationality) return;
+  if (!street || !city || !province || !postalCode) return;
   addressInfo.street = street;
   addressInfo.apartment = apartment;
   addressInfo.city = city;
   addressInfo.province = province;
   addressInfo.postalCode = postalCode;
-  addressInfo.nationality = nationality;
   nextStep();
 });
 
-// === ID TYPE SELECTION ===
-document.getElementById("idTypeForm").addEventListener("submit", function (e) {
+// === SCAN TYPE SELECTION ===
+document.getElementById("scanTypeForm").addEventListener("submit", function (e) {
   e.preventDefault();
-  var idType = document.getElementById("idType").value;
-  if (!idType) return;
-  idInfo.idType = idType;
-  var labelMap = {
-    "passport": "Passport",
-    "umid": "UMID",
-    "postal-id": "Postal ID",
-    "prc-id": "PRC ID",
-    "drivers-license": "Driver's License",
-    "voters-id": "Voter's ID",
-    "national-id": "National ID"
-  };
-  document.getElementById("selectedIdTypeLabel").textContent = labelMap[idType] || "ID";
+  var scanType = document.getElementById("scanType").value;
+  if (!scanType) return;
+  idInfo.scanType = scanType;
   nextStep();
 });
 
-// === UPLOAD LOGIC ===
-var uploadZone = document.getElementById("uploadZone");
+// === UPLOAD HANDLING ===
 var fileInput = document.getElementById("fileInput");
-var previewSection = document.getElementById("previewSection");
+var uploadArea = document.getElementById("uploadArea");
+var preview = document.getElementById("preview");
 var previewImage = document.getElementById("previewImage");
+var reuploadBtn = document.getElementById("reuploadBtn");
 var scanBtn = document.getElementById("scanBtn");
 var toReviewBtn = document.getElementById("toReviewBtn");
-var resetUploadBtn = document.getElementById("resetUploadBtn");
 var processing = document.getElementById("processing");
 var ocrStatus = document.getElementById("ocrStatus");
 
-uploadZone.addEventListener("click", function () { fileInput.click(); });
-uploadZone.addEventListener("dragover", function (e) {
+var currentFile = null;
+var currentDataURL = null;
+
+uploadArea.addEventListener("dragover", e => {
   e.preventDefault();
-  uploadZone.classList.add("dragover");
+  uploadArea.classList.add("dragover");
 });
-uploadZone.addEventListener("dragleave", function () {
-  uploadZone.classList.remove("dragover");
-});
-uploadZone.addEventListener("drop", function (e) {
+uploadArea.addEventListener("dragleave", e => {
   e.preventDefault();
-  uploadZone.classList.remove("dragover");
-  if (e.dataTransfer.files && e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]);
+  uploadArea.classList.remove("dragover");
 });
-fileInput.addEventListener("change", function (e) {
-  if (e.target.files && e.target.files[0]) handleFile(e.target.files[0]);
+uploadArea.addEventListener("drop", e => {
+  e.preventDefault();
+  uploadArea.classList.remove("dragover");
+  if (e.dataTransfer.files.length > 0) {
+    handleFile(e.dataTransfer.files[0]);
+  }
+});
+uploadArea.addEventListener("click", () => fileInput.click());
+fileInput.addEventListener("change", e => {
+  if (e.target.files.length > 0) handleFile(e.target.files[0]);
 });
 
 function handleFile(file) {
   if (!file.type.startsWith("image/")) {
-    showOcrStatus("Please select a valid image file.", "error");
+    showOcrStatus("Please select an image file", "error");
     return;
   }
-  if (file.size > 10 * 1024 * 1024) {
-    showOcrStatus("File too large. Max size is 10MB.", "error");
-    return;
-  }
-  uploadedFile = file;
   var reader = new FileReader();
-  reader.onload = function (ev) {
-    photoDataURL = ev.target.result;
-    previewImage.src = photoDataURL;
-    previewSection.style.display = "block";
+  reader.onload = e => {
+    currentFile = file;
+    currentDataURL = e.target.result;
+    previewImage.src = currentDataURL;
+    preview.style.display = "block";
+    uploadArea.style.display = "none";
+    reuploadBtn.style.display = "block";
     scanBtn.disabled = false;
-    uploadZone.style.display = "none";
   };
   reader.readAsDataURL(file);
 }
 
-resetUploadBtn.addEventListener("click", function () {
-  uploadedFile = null;
-  photoDataURL = null;
-  fileInput.value = "";
-  previewImage.src = "";
-  previewSection.style.display = "none";
+reuploadBtn.addEventListener("click", () => {
+  currentFile = null;
+  currentDataURL = null;
+  preview.style.display = "none";
+  uploadArea.style.display = "block";
   scanBtn.disabled = true;
   toReviewBtn.disabled = true;
-  ocrStatus.style.display = "none";
-  uploadZone.style.display = "block";
+  reuploadBtn.style.display = "block";
 });
 
 function showOcrStatus(msg, type) {
@@ -175,109 +165,235 @@ function showOcrStatus(msg, type) {
   ocrStatus.style.display = "block";
 }
 
-// === OCR SCAN HANDLER WITH COMMENTED CHECKS ===
+// === SCANNING PIPELINE ===
 scanBtn.addEventListener("click", async function () {
-  if (!uploadedFile) {
-    showOcrStatus("Please upload an ID first.", "error");
+  if (!currentFile) {
+    showOcrStatus("Please upload an image first.", "error");
     return;
   }
+
   processing.style.display = "block";
-  showOcrStatus("Starting OCR...", "success");
+  showOcrStatus("Scanning...", "success");
 
   try {
-    var result = await Tesseract.recognize(uploadedFile, "eng");
-    var text = result.data.text;
-    var upperText = text.toUpperCase();
+    let result = await scanImage(currentDataURL);
 
-    // === Step 1: Legit Philippine ID check (commented out) ===
-    // if (!(upperText.indexOf("REPUBLIC OF THE PHILIPPINES") > -1 || upperText.indexOf("REPUBLIKA NG PILIPINAS") > -1)) {
-    //   processing.style.display = "none";
-    //   toReviewBtn.disabled = true;
-    //   showOcrStatus("This does not look like a Philippine government-issued ID.", "error");
-    //   return;
-    // }
-
-    // === Step 2: Match selected ID type (commented out) ===
-    // var idMatch = checkIdTypeMatch(text, idInfo.idType);
-    // if (!idMatch.match) {
-    //   processing.style.display = "none";
-    //   toReviewBtn.disabled = true;
-    //   showOcrStatus("ID type mismatch. Expected " + getIdTypeDisplayName(idInfo.idType), "error");
-    //   return;
-    // }
-
-    // Step 3: Extract info
-    var extracted = extractIDInformation(text, idInfo.idType);
-    Object.assign(idInfo, extracted);
+    if (result.fields) {
+      Object.assign(idInfo, result.fields);
+    }
 
     processing.style.display = "none";
     toReviewBtn.disabled = false;
-    showOcrStatus("ID scanned successfully! Please review your details.", "success");
+    showOcrStatus("Scan successful! (" + result.method + ")", "success");
 
+    if (debugMode) {
+      console.log("Scan Result:", result);
+    }
   } catch (err) {
-    console.error(err);
+    console.error("Scanning error:", err);
     processing.style.display = "none";
     toReviewBtn.disabled = true;
-    showOcrStatus("Error scanning ID. Try a clearer image.", "error");
+    showOcrStatus("Error scanning. Try clearer image.", "error");
   }
 });
 
-// === ID TYPE MATCHER ===
-function checkIdTypeMatch(text, selectedIdType) {
-  var cleanText = text.toLowerCase().replace(/[^a-z0-9\s]/g, " ").replace(/\s+/g, " ");
-  var idTypeKeywords = {
-    "postal-id": ["postal", "philpost", "postal identity card"],
-    "prc-id": ["professional regulation commission", "prc"],
-    "umid": ["unified multi purpose", "umid", "sss", "gsis"],
-    "voters-id": ["commission on elections", "comelec", "voter"],
-    "drivers-license": ["land transportation office", "lto", "license"],
-    "national-id": ["philippine identification card", "philsys", "national id"],
-    "passport": ["passport", "pasaporte"]
-  };
-  var keywords = idTypeKeywords[selectedIdType] || [];
-  var found = keywords.some(function (kw) { return cleanText.indexOf(kw) > -1; });
-  return { match: found, reason: found ? "Matched" : "Not matched" };
-}
+// === SCAN IMAGE ===
+async function scanImage(dataUrl) {
+  let result = { method: null, raw: null, fields: {} };
 
-function getIdTypeDisplayName(idType) {
-  var names = {
-    "passport": "Passport",
-    "umid": "UMID",
-    "postal-id": "Postal ID",
-    "prc-id": "PRC ID",
-    "drivers-license": "Driver's License",
-    "voters-id": "Voter's ID",
-    "national-id": "National ID"
-  };
-  return names[idType] || "ID";
-}
+  try {
+    if (idInfo.scanType === "qrcode") {
+      const qrResult = await tryQRCodeScan(dataUrl);
+      if (qrResult.success) {
+        result.method = "QR Code";
+        result.raw = qrResult.data;
+        result.fields = parseQRCodeData(qrResult.data);
+        return result;
+      }
+    }
 
-// === INFO EXTRACTION ===
-function extractIDInformation(text, idType) {
-  var out = {};
-  var clean = text.replace(/\n/g, " ").replace(/\s+/g, " ").trim();
+    if (idInfo.scanType === "barcode") {
+      const barcodeResult = await tryBarcodeScan(dataUrl);
+      if (barcodeResult.success) {
+        result.method = "Barcode";
+        result.raw = barcodeResult.data;
+        result.fields = parseBarcodeData(barcodeResult.data);
+        return result;
+      }
+    }
 
-  // Names
-  var namePattern = /\b([A-Z][a-zA-Z'-]+)\s+([A-Z][a-zA-Z'-]+)(?:\s+([A-Z][a-zA-Z'-]+))?\b/;
-  var nameMatch = clean.match(namePattern);
-  if (nameMatch) {
-    out.firstName = nameMatch[1];
-    out.lastName = nameMatch[2];
-    if (nameMatch[3]) out.middleName = nameMatch[3];
+    if (idInfo.scanType === "passport") {
+      const rawOcr = await getRawOCRText(dataUrl);
+      const mrzResult = await tryMRZParse(rawOcr);
+      if (mrzResult.success) {
+        result.method = "MRZ";
+        result.raw = rawOcr;
+        result.fields = mrzResult.fields;
+        return result;
+      }
+    }
+
+    // fallback OCR
+    const ocrResult = await tryOCRScan(dataUrl);
+    result.method = "OCR";
+    result.raw = ocrResult.text;
+    result.fields = extractIDInformation(ocrResult.text);
+    return result;
+
+  } catch (error) {
+    throw new Error("Failed to scan image");
   }
-
-  // DOB
-  var dobMatch = clean.match(/BIRTH[\s:,-]*(\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4})/i);
-  if (dobMatch) out.dateOfBirth = dobMatch[1];
-
-  // Gender
-  var genderMatch = clean.match(/(MALE|FEMALE|M|F)/i);
-  if (genderMatch) out.gender = genderMatch[1];
-
-  return out;
 }
 
-// === REVIEW RENDERING ===
+// === QR CODE ===
+async function tryQRCodeScan(dataUrl) {
+  try {
+    const reader = new window.ZXing.BrowserMultiFormatReader(); // note window.ZXing
+    const img = await createImageFromDataUrl(dataUrl);
+    const result = await reader.decodeFromImageElement(img);
+    if (result && result.getText()) {
+      return { success: true, data: result.getText() };
+    }
+  } catch (err) {
+    console.warn("QR scan failed:", err);
+  }
+  return { success: false };
+}
+
+function parseQRCodeData(qrText) {
+  let fields = {};
+  try {
+    const jsonData = JSON.parse(qrText);
+    if (jsonData.subject) {
+      fields.lastName = jsonData.subject.lName || "";
+      fields.firstName = jsonData.subject.fName || "";
+      fields.middleName = jsonData.subject.mName || "";
+      fields.suffix = jsonData.subject.Suffix || "";
+      fields.gender = jsonData.subject.sex || "";
+      fields.dateOfBirth = jsonData.subject.DOB || "";
+      fields.nationality = jsonData.subject.Nationality || "PHL";
+    }
+    return fields;
+  } catch (e) {
+    return {};
+  }
+}
+
+// === BARCODE ===
+async function tryBarcodeScan(dataUrl) {
+  try {
+    const codeReader = new ZXing.BrowserMultiFormatReader();
+    const img = await createImageFromDataUrl(dataUrl);
+    const result = await codeReader.decodeFromImageElement(img);
+    if (result && result.getText()) {
+      return { success: true, data: result.getText() };
+    }
+  } catch (err) {}
+  return { success: false };
+}
+
+// === MRZ ===
+async function tryMRZParse(ocrText) {
+  try {
+    if (debugMode) {
+      console.log("=== Raw OCR Text (MRZ candidate) ===");
+      console.log(ocrText);
+    }
+
+    const lines = ocrText.split('\n')
+      .map(l => l.trim())
+      .filter(l => /^[A-Z0-9<]{28,}$/.test(l)); // accept >=28 chars
+
+    if (debugMode) {
+      console.log("=== Filtered MRZ Lines ===");
+      console.log(lines);
+    }
+
+    if (lines.length >= 2) {
+      const mrzLines = lines.slice(-2); // last 2 lines
+      const l1 = mrzLines[0];
+      const l2 = mrzLines[1];
+
+      if (debugMode) {
+        console.log("MRZ Line 1:", l1);
+        console.log("MRZ Line 2:", l2);
+      }
+
+      // --- Names from line 1 ---
+      let lastName = "";
+      let firstName = "";
+      if (l1.includes("<<")) {
+        const parts = l1.split("<<");
+        lastName = parts[0].substring(5).replace(/</g, " ").trim();
+        firstName = (parts[1] || "").replace(/</g, " ").trim();
+      }
+
+      // --- Fixed positions from line 2 ---
+      const nationality = l2.substring(10, 13).replace(/</g, "").trim(); // 11–13 (1-indexed)
+      const dobRaw = l2.substring(14, 20); // 15–20 (YYMMDD, 1-indexed)
+      let gender = l2.charAt(21).toUpperCase(); // 22 (1-indexed) -> index 21 (0-indexed)
+
+      let dateOfBirth = "";
+      if (/^\d{6}$/.test(dobRaw)) {
+        const yy = parseInt(dobRaw.substring(0, 2), 10);
+        const mm = dobRaw.substring(2, 4);
+        const dd = dobRaw.substring(4, 6);
+        const fullYear = yy < 30 ? "20" + yy.toString().padStart(2, "0") : "19" + yy.toString().padStart(2, "0");
+        dateOfBirth = `${fullYear}-${mm}-${dd}`;
+      }
+
+      if (gender !== "M" && gender !== "F") {
+        gender = ""; // fallback if OCR noise
+      }
+
+      if (debugMode) {
+        console.log("Parsed MRZ fields:", {
+          firstName,
+          lastName,
+          dateOfBirth,
+          gender,
+          nationality
+        });
+      }
+
+      return {
+        success: true,
+        fields: {
+          firstName,
+          lastName,
+          dateOfBirth,
+          gender,
+          nationality
+        }
+      };
+    }
+  } catch (err) {
+    console.warn("MRZ parse failed:", err);
+  }
+  return { success: false };
+}
+
+// === OCR ===
+async function tryOCRScan(dataUrl) {
+  const { data } = await Tesseract.recognize(dataUrl, 'eng');
+  return { success: true, text: data.text, confidence: data.confidence };
+}
+
+async function getRawOCRText(dataUrl) {
+  const { data } = await Tesseract.recognize(dataUrl, 'eng');
+  return data.text;
+}
+
+function createImageFromDataUrl(dataUrl) {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.onload = () => resolve(img);
+    img.onerror = reject;
+    img.src = dataUrl;
+  });
+}
+
+// === REVIEW ===
 toReviewBtn.addEventListener("click", function () {
   if (toReviewBtn.disabled) return;
   renderReview();
@@ -285,59 +401,77 @@ toReviewBtn.addEventListener("click", function () {
 });
 
 function renderReview() {
-  var reviewContact = document.getElementById("reviewContact");
-  var reviewAddress = document.getElementById("reviewAddress");
-  var reviewID = document.getElementById("reviewID");
-  var reviewPhoto = document.getElementById("reviewPhoto");
+  // Step 1–2 info (readonly text)
+  document.getElementById("revPhone").textContent = contactInfo.phone || "";
+  document.getElementById("revEmail").textContent = contactInfo.email || "";
+  document.getElementById("revAddress").textContent =
+    (addressInfo.street || "") + " " +
+    (addressInfo.apartment || "") + ", " +
+    (addressInfo.city || "") + ", " +
+    (addressInfo.province || "") + " " +
+    (addressInfo.postalCode || "");
 
-  reviewContact.innerHTML =
-    "<div><b>Phone:</b> " + (contactInfo.phone || "") + "</div>" +
-    "<div><b>Email:</b> " + (contactInfo.email || "") + "</div>";
+  // Step 3–4 info (editable)
+  document.getElementById("revFirstName").value = idInfo.firstName || "";
+  document.getElementById("revLastName").value = idInfo.lastName || "";
+  document.getElementById("revMiddleName").value = idInfo.middleName || "";
+  document.getElementById("revSuffix").value = idInfo.suffix || "";
+  document.getElementById("revDateOfBirth").value = idInfo.dateOfBirth || "";
+  document.getElementById("revGender").value = idInfo.gender || "";
+  document.getElementById("revNationality").value = idInfo.nationality || "";
 
-  reviewAddress.innerHTML =
-    "<div><b>Street:</b> " + (addressInfo.street || "") + "</div>" +
-    "<div><b>Apartment:</b> " + (addressInfo.apartment || "") + "</div>" +
-    "<div><b>City:</b> " + (addressInfo.city || "") + "</div>" +
-    "<div><b>Province:</b> " + (addressInfo.province || "") + "</div>" +
-    "<div><b>Postal Code:</b> " + (addressInfo.postalCode || "") + "</div>" +
-    "<div><b>Nationality:</b> " + (addressInfo.nationality || "") + "</div>";
-
-  reviewID.innerHTML =
-    "<div><b>First Name:</b> " + (idInfo.firstName || "") + "</div>" +
-    "<div><b>Last Name:</b> " + (idInfo.lastName || "") + "</div>" +
-    "<div><b>Middle Name:</b> " + (idInfo.middleName || "") + "</div>" +
-    "<div><b>Date of Birth:</b> " + (idInfo.dateOfBirth || "") + "</div>" +
-    "<div><b>ID TYPE:</b> " + getIdTypeDisplayName(idInfo.idType) + "</div>" +
-    "<div><b>Gender:</b> " + (idInfo.gender || "") + "</div>";
-
-  if (photoDataURL) {
-    reviewPhoto.src = photoDataURL;
+  if (currentDataURL) {
+    var reviewPhoto = document.getElementById("reviewPhoto");
+    reviewPhoto.src = currentDataURL;
     reviewPhoto.style.display = "block";
   }
 }
 
-// === PIN LOGIC ===
-document.getElementById("pinForm").addEventListener("submit", function (e) {
-  e.preventDefault();
-  var pin = document.getElementById("pinField").value.replace(/\D/g, "");
-  var confirmPin = document.getElementById("confirmPinField").value.replace(/\D/g, "");
-  if (pin.length !== 6 || confirmPin.length !== 6) {
-    setFinalStatus("PIN must be exactly 6 digits.", false);
-    return;
-  }
-  if (pin !== confirmPin) {
-    setFinalStatus("PINs do not match.", false);
-    return;
-  }
-  setFinalStatus("Registration completed successfully!", true);
+document.getElementById("toPinBtn").addEventListener("click", function () {
+  idInfo.firstName = document.getElementById("revFirstName").value.trim();
+  idInfo.lastName = document.getElementById("revLastName").value.trim();
+  idInfo.middleName = document.getElementById("revMiddleName").value.trim();
+  idInfo.suffix = document.getElementById("revSuffix").value.trim();
+  idInfo.dateOfBirth = document.getElementById("revDateOfBirth").value.trim();
+  idInfo.gender = document.getElementById("revGender").value.trim();
+  idInfo.nationality = document.getElementById("revNationality").value.trim();
+  nextStep();
 });
 
-function setFinalStatus(msg, ok) {
-  var el = document.getElementById("finalStatus");
-  el.textContent = msg;
-  el.className = "status-message " + (ok ? "status-success" : "status-error");
-  el.style.display = "block";
-}
+// === PIN LOGIC (REVISED) ===
+document.getElementById("pinForm").addEventListener("submit", function (e) {
+  e.preventDefault();
+
+  const pin = document.getElementById("pinField").value.trim();
+  const confirmPin = document.getElementById("confirmPinField").value.trim();
+
+  // Must be 6 digits only
+  const pinRegex = /^\d{6}$/;
+
+  if (!pinRegex.test(pin) || !pinRegex.test(confirmPin)) {
+    alert("PIN must be exactly 6 digits.");
+    return;
+  }
+
+  if (pin !== confirmPin) {
+    alert("PINs do not match.");
+    return;
+  }
+
+  // ✅ Passed validation → proceed
+  nextStep();
+});
+
+// === PIN INPUT ENFORCEMENT ===
+["pinField", "confirmPinField"].forEach(id => {
+  const field = document.getElementById(id);
+  field.setAttribute("inputmode", "numeric");
+  field.setAttribute("maxlength", "6");
+  field.addEventListener("input", function (e) {
+    // keep only digits, trim to 6
+    e.target.value = e.target.value.replace(/\D/g, "").slice(0, 6);
+  });
+});
 
 // === PIN TOGGLE ===
 function setupToggle(fieldId, toggleId) {
@@ -355,7 +489,3 @@ function setupToggle(fieldId, toggleId) {
 }
 setupToggle("pinField", "togglePin");
 setupToggle("confirmPinField", "toggleConfirmPin");
-
-document.getElementById("toPinBtn").addEventListener("click", function () {
-  nextStep();
-});
